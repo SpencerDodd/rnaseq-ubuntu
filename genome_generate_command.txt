@@ -1,0 +1,5 @@
+STAR --runMode genomeGenerate --genomeDir /home/ubuntu/annotated_genome/indices \
+--genomeFastaFiles /home/ubuntu/annotated_genome/indices/Homo_sapiens.GRCh37.75.dna.primary_assembly.fa \
+--sjdbGTFfile /home/ubuntu/annotated_genome/Homo_sapiens.GRCh37.75.gtf \
+--sjdbOverhang 100 \
+--runThreadN 32
