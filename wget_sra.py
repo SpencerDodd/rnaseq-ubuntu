@@ -2,7 +2,7 @@
 import subprocess
 
 """
-This script grabs files from the NCBI's SRA db using wget
+This script grabs files from the NCBI's SRA db using ftp grabs
 """
 files_to_get = [
 	"SRR1039508", # success

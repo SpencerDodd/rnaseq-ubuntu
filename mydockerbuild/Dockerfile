@@ -71,7 +71,7 @@ RUN echo STAR --runMode genomeGenerate --genomeDir /home/ubuntu/annotated_genome
 --genomeFastaFiles /home/ubuntu/annotated_genome/Homo_sapiens.GRCh37.75.dna.primary_assembly.fa \
 --sjdbGTFfile /home/ubuntu/annotated_genome/Homo_sapiens.GRCh37.75.gtf \
 --sjdbOverhang -1 \
---runThreadN 12 >> run_star.sh
+--runThreadN 32 >> run_star.sh
 RUN chmod +x run_star.sh
 
 # move everything to the right place
@@ -83,7 +83,10 @@ RUN mv run_star.sh annotated_genome
 # change all permissions to write
 RUN chmod -R +wrx annotated_genome
 
-
+# NOTES:
+# This is expected to run on a 32-core CPU. If it is not being run on
+# a 32-core machine, change the --runThreadN value to the number of
+# cores present on the machine
 
 
 
