@@ -1,0 +1,3 @@
+for f in 'cat files'; do STAR --genomeDir /home/ubuntu/annotated_genome/indices \ 
+--readFilesIn fastq/$f\_1.fastq fastq/$f\_2.fastq \
+--runThreadN 4 --outFileNamePrefix aligned/$f.; done
