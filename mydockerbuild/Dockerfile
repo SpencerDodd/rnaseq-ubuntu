@@ -1,3 +1,13 @@
+# NOTES:
+# This script is optimized for an EC2-c3.8xlarge
+# Therefore, it is expected to run on a 32-core CPU. If it is not being run 
+# on a 32-core machine, change the --runThreadN value to the number of
+# cores present on the machine
+# Additionally:
+# STAR expects at least 30 GB of RAM, if your system does not meet that
+# requirement, the algorithm will run extremely slowly with a lot of data
+# in swap space. (you don't want that)
+
 FROM ubuntu:14.04
 MAINTAINER Spencer Dodd <sdodd@broadinstitute.org>
 USER root
@@ -74,21 +84,22 @@ RUN echo STAR --runMode genomeGenerate --genomeDir /home/ubuntu/annotated_genome
 --runThreadN 32 >> run_star.sh
 RUN chmod +x run_star.sh
 
+# make a shell script that runs the alignment automation
+RUN echo for f in 'cat files'; do STAR --genomeDir /home/ubuntu/annotated_genome/indices \ 
+--readFilesIn /home/ubuntu/annotated_genome/fastq/$f\_1.fastq \
+--runThreadN 32 
+--outFileNamePrefix aligned/$f.; done > run_align.sh
+RUN chmod +x run_align.sh
+
 # move everything to the right place
 RUN mv Homo_sapiens.GRCh37.75.dna.primary_assembly.fa annotated_genome
 RUN mv Homo_sapiens.GRCh37.75.gtf annotated_genome
 RUN mv indices annotated_genome
 RUN mv run_star.sh annotated_genome
+RUN mv run_alighn.sh annotated_genome
 
 # change all permissions to write
 RUN chmod -R +wrx annotated_genome
-
-# NOTES:
-# This is expected to run on a 32-core CPU. If it is not being run on
-# a 32-core machine, change the --runThreadN value to the number of
-# cores present on the machine
-
-
 
 
 
